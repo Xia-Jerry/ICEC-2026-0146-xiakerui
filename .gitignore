@@ -1,0 +1,42 @@
+# ---- 系统与编辑器 ----
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+
+# ---- 编译与中间产物 ----
+*.o
+*.obj
+*.elf
+*.bin.tmp
+*.hex.bak
+build/
+dist/
+out/
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+.ipynb_checkpoints/
+
+# ---- Node ----
+node_modules/
+*.log
+
+# ---- 大文件与敏感信息 ----
+*.mp4
+*.mov
+*.zip
+*.7z
+.env
+.env.*
+secrets.json
+
+# 注意：01-Field-Discovery/raw_data/ 为考核证据，禁止忽略
