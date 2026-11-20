@@ -1,0 +1,236 @@
+1.
+ 信息与通信学院
+SCHOOL OF INFORMATION AND COMMUNICATIONS TECHNOLOGY
+24h 应急
+热线电话：0755-83759831
+邮箱地址：sitict@163.com
+及时回复学生诉求，迅速解
+（部分文字被遮挡截断）
+
+2.
+深圳城市职业学院
+深圳技师学院
+资产名称：空调 (格力)
+资产编码：20144773
+使用部门：党委学生工作部（学生处）
+存放地点：博雅轩 314
+还有一个二维码。
+
+3.
+识别内容
+品牌标识：Enjoy Wind 悦风（格力悦风空调）
+中国能效标识：
+
+能效等级：2 级
+能效比：3.49
+输入功率：1002W
+制冷量：3500W（正 1.5 匹）
+
+绿色标签：
+
+空调滤网已清洗
+清洗时间：（手写）
+清洗人：（手写）
+
+能效标识放大这款是格力悦风 1.5 匹二级能效挂机空调。
+要不要我帮你查这个型号的详细参数？
+
+4.
+书籍信息
+
+
+英语练习册
+书名：英语（职业模块 服务类）练习册
+适用：中等职业学校公共基础课程配套教学用书
+总主编：闫国华
+出版社：外语教学与研究出版社
+ISBN：9787521330212
+你是想要这本书的答案吗？
+
+5.
+这是安全出口指示牌：
+文字：安全出口、EXIT
+图案：奔跑的小人图标 + 向右箭头，指示安全出口在右侧
+右下角还有小字：119（火警电话）
+它属于消防应急疏散标识，断电后一般也会发光，用来指引逃生方向。
+
+6.
+图片识别内容（文字乱码，是编码问题）
+plaintext
+Adobe Flash Player 更新使示
+该版本过旧，饤支抵轿行，请瘤级瘼
+使用。查看瘤级详情:
+http://www.adobe.com/go/fp_cn
+✅ 原本正确提示文字（乱码还原）：
+Adobe Flash Player 更新提示
+该版本过旧，不支持运行，请升级使用。查看升级详情：
+http://www.adobe.com/go/fp_cn
+💡补充说明：Flash Player 在 2020 年底已经正式停止维护，这个弹窗是改版 / 移植版 Flash 播放器出现中文编码错乱，官方早已不再提供升级服务。
+要不要我给你说下怎么正常打开本地 swf 文件？
+
+7.
+这是一张 Flash 问题修复工具界面截图，文字内容如下：
+Flash 问题修复
+Flash 安装检测
+ActiveX 版 已安装
+PPAPI 版 已安装
+查看其他版本 >>
+版本安全检测
+版本正常
+运行异常问题
+必要组件运行正常
+底部文字：
+检测已完成，未发现问题，请继续保持，Flash 不能运行如何解决
+【重新检测】（蓝色按钮）
+补充说明：Flash 官方早已停止支持，这个是国内第三方 Flash 修复工具。
+需要我给你讲讲就算检测全绿，网页 Flash 依旧打不开的解决办法吗？
+
+8.
+图片文字识别内容场景树结构速览plaintext1  世界根节点
+2  ├─ WorldInfo                ← 世界参数
+3  ├─ Viewpoint                ← 相机视角
+4  ├─ TexturedBackground       ← 背景
+5  ├─ TexturedBackgroundLight  ← 灯光
+6  ├─ RectangleArena           ← 地面
+7  └─ Robot                    ← 机器人(顶层)
+8      └─ children [
+9          └─ Solid            ← 实体分组节点
+10             ├─ DistanceSensor ← 距离传感器
+11             │   └─ children [
+12             │       └─ Shape ← 传感器外观
+13             │           └─ Sphere (radius: 0.01)
+14             │   ]
+15             └─ Shape        ← 机器人本体外观
+16                 ├─ PBRAppearance
+17                 └─ Box (size: 0.1 × 0.1 × 0.1)
+18      ]
+右上角：Plain Text ▾ | 自动换行 ▢ 复制一、Webots 场景树与节点层级1.1 回顾：什么是场景树在 1.1 中我们看到了场景树（Scene Tree）面板。Webots 世界由节点（Node）按父子关系组织成树状结构 —— 就像文件系统的目录树。每个节点可以包含若干子节点，子节点又可以包含孙节点，层层嵌套。1.2 本案例的嵌套层次打开 worlds/test.wbt，在场景树中逐层展开：如果你需要，我可以把这份结构转成可直接粘贴到 Webots 的 wbt 源码。
+
+9.
+python
+运行
+# my_controller.py
+1 import sys  # 导入sys模块，用于读取命令行参数
+2 from controller import Robot  # 导入Webots机器人控制器基类
+3
+4 TIME_STEP = 32  # 设置仿真时间步长为32毫秒
+5
+6 robot = Robot()  # 创建Robot实例，绑定到.wbt中的Robot节点
+7 for arg in sys.argv[1:]:  # 遍历命令行参数（跳过脚本名本身）
+8     if arg == "red":  # 如果参数为red
+9         print("This is red robot")  # 打印红色机器人标识
+10    if arg == "yellow":  # 如果参数为yellow
+11        print("This is yellow robot")  # 打印黄色机器人标识
+12 while robot.step(TIME_STEP) != -1:  # 主循环：每步推进TIME_STEP毫秒，返回-1表示仿真结束
+13    pass  # 空操作，保持仿真运行
+14
+说明
+这是 Webots 仿真软件 的 Python 控制器代码，作用：
+接收启动时传入的命令行参数 red / yellow，在控制台输出对应提示；
+启动机器人仿真主循环，pass 代表暂时不做运动、传感器控制等动作，只维持仿真运行。
+小提示：这里两个 if 是并列判断，不是 if-elif。如果同时传入 red yellow，两句都会打印。
+需要我帮你改成 if ... elif ... 的版本吗？
+
+
+10.
+python
+运行
+from controller import Robot, Keyboard
+
+TIME_STEP = 32
+robot = Robot()
+kb = robot.getKeyboard()
+kb.enable(TIME_STEP)
+
+while robot.step(TIME_STEP) != -1:
+    keyIn = kb.getKey()
+    if keyIn == Keyboard.UP: print("UP")
+    if keyIn == Keyboard.DOWN: print("down")
+    if keyIn == Keyboard.LEFT: print("left")
+    if keyIn == Keyboard.RIGHT: print("right")
+⚠️ 原代码里有语法错误：if keyIn = 是赋值，判断相等应该用 ==，我已经帮你修正好了。
+这是 Webots 的机器人控制器代码，作用是读取键盘方向键并打印按键信息。
+需要我给你加上小车移动的代码吗？按下方向键就控制轮子转动。
+
+
+11.
+这是 Webots 仿真机器人的 Python 控制器代码：python运行import math
+from controller import Robot
+
+TIME_STEP = 32
+
+robot = Robot()
+motor = robot.getDevice("motor")
+F = 2.0
+t = 0.0
+
+while robot.step(TIME_STEP) != -1:
+    position = math.sin(t * 2.0 * math.pi * F)
+    motor.setPosition(position)
+    t += TIME_STEP / 1000
+代码说明
+TIME_STEP = 32：仿真步长，单位 ms
+F=2.0：正弦信号频率 2Hz
+math.sin(t * 2.0 * math.pi * F)：生成正弦位置指令，电机做周期性往复摆动
+t += TIME_STEP / 1000：把毫秒转为秒，更新时间
+
+作用：控制名为 motor 的关节电机，以 2Hz 的正弦规律来回转动。
+需要我帮你改成可调频率、限制转动范围的版本吗？
+
+12.
+单词表
+Learning the words
+team building activity — 团建活动
+inform — 通知
+upcoming — 即将来临的
+be organised by — 由…… 组织
+Human Resources Department — 人力资源部
+staff — 员工
+be expected to — 被期望；理应
+remind — 提醒
+overnight — 过夜；通宵
+suitable — 合适的
+右侧文字：
+1. 学习通 - 词汇英译汉单选
+2. 学习通 - 词汇汉译英单选
+3. 划分音节 - 主题讨论 (手写单词，划分音节，拍照
+4. 单词朗读抢答
+5. 学习通 - 抢答 - 词汇翻译
+需要我把这些单词带音标和例句整理给你吗？
+
+13.
+识别内容（警务岗亭宣传板，深圳）
+新盐派出所报警电话：
+89905100 / 84837701
+反诈专线电话：
+81234567（深圳反诈专线）
+配图是卡通警察形象，蓝色背景警务宣传板，属于治安岗亭。
+下方小字模糊无法辨认。
+要不要我帮你确认这个新盐派出所的位置？
+
+14.
+图里标识上的大字：强电井，还有闪电警示符号。
+下方小字比较模糊，主要识别内容就是：强电井。
+强电井一般是楼宇里敷设 220V 及以上供电电缆、配电箱的电气竖井，属于高压用电设施，有触电危险，非专业人员不能随意开启。
+
+15.
+图里的文字：
+温馨提示
+小心烫伤
+右下角还能看到：温开
+左边是饮水机的出水龙头。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
