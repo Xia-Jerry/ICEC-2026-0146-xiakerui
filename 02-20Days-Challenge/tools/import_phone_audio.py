@@ -94,6 +94,8 @@ def main():
     ap.add_argument("--count", type=int, default=15, help="每个工况切几段")
     ap.add_argument("--out-dir", default=None, help="输出目录（默认 data/wav）")
     ap.add_argument("--index", default=None, help="索引 CSV 路径（默认 data/录音索引.csv）")
+    ap.add_argument("--map", default=None,
+                    help='显式映射，如 "C1=一档,C2=三档,C3=三档+贴纸,C4=三档+贴纸+遮挡,C5=空"')
     args = ap.parse_args()
 
     if not os.path.isdir(args.src):
@@ -104,9 +106,19 @@ def main():
     if not files:
         sys.exit(f"目录里没有音频文件: {args.src}")
 
-    # 按 C1~C5 归类；无标识则按顺序映射
+    # 按 C1~C5 归类：优先 --map 显式映射，其次文件名含 Cx，最后按顺序补位
     groups = {c: None for c in COND}
     unmapped = []
+    if args.map:
+        stem2path = {os.path.splitext(f)[0]: os.path.join(args.src, f) for f in files}
+        for pair in args.map.split(","):
+            k, _, v = pair.partition("=")
+            k, v = k.strip().upper(), v.strip()
+            if k in groups and v in stem2path:
+                groups[k] = stem2path[v]
+            else:
+                print(f"⚠️ 映射未命中: {k}={v}")
+        files = []          # 已全部通过映射处理
     for f in files:
         c = guess_cond(f)
         if c and groups.get(c) is None:
