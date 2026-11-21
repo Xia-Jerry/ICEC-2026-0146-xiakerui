@@ -159,6 +159,8 @@ def main():
     proj = os.path.dirname(here)
     ap.add_argument("--dir", default=os.path.join(proj, "data", "wav"))
     ap.add_argument("--out", default=os.path.join(proj, "data", "features.csv"))
+    ap.add_argument("--normalize", action="store_true",
+                    help="按每段自身 RMS 归一化后再提特征，消除录音距离/增益差异")
     args = ap.parse_args()
 
     files = sorted(glob.glob(os.path.join(args.dir, "*.wav")))
@@ -170,6 +172,9 @@ def main():
         name = os.path.basename(p)
         cond = name.split("-")[1].upper()
         x, fs = load_wav(p)
+        if args.normalize:
+            r = np.sqrt(np.mean(x ** 2)) + 1e-9
+            x = x / r * 0.05
         if fs != FS_EXPECT:
             print(f"⚠️ {name} 采样率 {fs}，与预期 {FS_EXPECT} 不符")
         feats = frame_features(x, fs)

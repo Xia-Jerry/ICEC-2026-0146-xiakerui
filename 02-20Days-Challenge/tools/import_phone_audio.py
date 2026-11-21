@@ -94,6 +94,7 @@ def main():
     ap.add_argument("--count", type=int, default=15, help="每个工况切几段")
     ap.add_argument("--out-dir", default=None, help="输出目录（默认 data/wav）")
     ap.add_argument("--index", default=None, help="索引 CSV 路径（默认 data/录音索引.csv）")
+    ap.add_argument("--prefix", default="vib", help="输出文件名前缀（默认 vib）")
     ap.add_argument("--map", default=None,
                     help='显式映射，如 "C1=一档,C2=三档,C3=三档+贴纸,C4=三档+贴纸+遮挡,C5=空"')
     args = ap.parse_args()
@@ -170,10 +171,10 @@ def main():
             if b > len(x):
                 break
             seg = x[a:b]
-            name = f"vib-{c.lower()}-{i + 1:02d}.wav"
+            name = f"{args.prefix}-{c.lower()}-{i + 1:02d}.wav"
             write_wav(os.path.join(out_dir, name), seg, fs)
             rms = float(np.sqrt(np.mean(seg ** 2)))
-            w.writerow([f"vib-{c}-{i + 1:02d}", c, label, name, args.seg, fs, "16bit",
+            w.writerow([f"{args.prefix}-{c}-{i + 1:02d}", c, label, name, args.seg, fs, "16bit",
                         "mono", gear, "25", dt.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
                         f"源 {os.path.basename(src)}；第 {i + 1} 段 {i * args.seg:.0f}~{(i + 1) * args.seg:.0f}s"])
             made += 1

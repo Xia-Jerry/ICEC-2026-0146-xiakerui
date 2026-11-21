@@ -28,14 +28,18 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 PROJ = os.path.dirname(HERE)
 DATA = os.path.join(PROJ, "data")
 
-FEAT_SEL = ["rms_db", "entropy", "peak"]
+FEAT_SETS = {
+    "level3": ["rms_db", "entropy", "peak"],                       # 实验 A：含电平
+    "shape4": ["kurtosis", "bandwidth", "zcr", "band_20_100"],     # 实验 B：禁用音量
+}
+FEAT_SEL = FEAT_SETS["level3"]
 LABEL = {"C1": "正常·低档", "C2": "正常·高档", "C3": "扇叶失衡",
          "C4": "进风遮挡", "C5": "停机静默"}
 K = 3
 
 
-def load_ref():
-    with open(os.path.join(DATA, "features.csv"), encoding="utf-8-sig") as f:
+def load_ref(path=None):
+    with open(path or os.path.join(DATA, "features.csv"), encoding="utf-8-sig") as f:
         rows = list(csv.DictReader(f))
     X = np.array([[float(r[k]) for k in FEAT_SEL] for r in rows])
     y = np.array([r["cond"] for r in rows])
@@ -44,8 +48,11 @@ def load_ref():
     return (X - mu) / sd, y, mu, sd
 
 
-def predict_one(path, Xz, y, mu, sd):
+def predict_one(path, Xz, y, mu, sd, normalize=False):
     x, fs = load_wav(path)
+    if normalize:
+        r = np.sqrt(np.mean(x ** 2)) + 1e-9
+        x = x / r * 0.05
     f = frame_features(x, fs)
     v = np.array([f[k] for k in FEAT_SEL])
     vz = (v - mu) / sd
@@ -63,9 +70,16 @@ def predict_one(path, Xz, y, mu, sd):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("target", help="wav 文件或目录")
+    ap.add_argument("--feats", default="level3", choices=list(FEAT_SETS),
+                    help="特征集：level3（含电平）或 shape4（禁用音量）")
+    ap.add_argument("--ref", default=None, help="参考特征集 CSV（默认 data/features.csv）")
+    ap.add_argument("--normalize", action="store_true", help="推理前按 RMS 归一化（与 --ref 配套）")
     args = ap.parse_args()
 
-    Xz, y, mu, sd = load_ref()
+    global FEAT_SEL
+    FEAT_SEL = FEAT_SETS[args.feats]
+
+    Xz, y, mu, sd = load_ref(args.ref)
     print(f"参考集：{len(y)} 段　特征：{', '.join(FEAT_SEL)}　k={K}\n")
 
     if os.path.isdir(args.target):
@@ -78,7 +92,7 @@ def main():
     hit = 0
     for p in files:
         name = os.path.basename(p)
-        pred, conf, idx, d, f = predict_one(p, Xz, y, mu, sd)
+        pred, conf, idx, d, f = predict_one(p, Xz, y, mu, sd, args.normalize)
         truth = None
         for c in LABEL:
             if c.lower() in name.lower():
