@@ -32,6 +32,7 @@ node_modules/
 
 # ---- 大文件与敏感信息 ----
 *.mp4
+!02-20Days-Challenge/盲测演示.mp4
 *.mov
 *.zip
 *.7z
